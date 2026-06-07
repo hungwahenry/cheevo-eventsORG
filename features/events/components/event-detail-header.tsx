@@ -8,7 +8,7 @@ import { useEventSales } from '@/features/events/sales/hooks';
 import { formatMoney } from '@/lib/format/money';
 import { haptics } from '@/lib/haptics';
 import { router } from 'expo-router';
-import { ArrowLeft, ScanLine } from 'lucide-react-native';
+import { ArrowLeft, Megaphone, ScanLine } from 'lucide-react-native';
 import { Pressable, View } from 'react-native';
 
 export function EventDetailHeader({ eventId }: { eventId: string }) {
@@ -17,12 +17,23 @@ export function EventDetailHeader({ eventId }: { eventId: string }) {
 
   return (
     <View className="pt-safe-offset-4 border-border gap-3 border-b px-6 pb-4">
-      <Pressable
-        onPress={() => router.back()}
-        hitSlop={12}
-        className="active:bg-muted size-10 items-center justify-center rounded-full">
-        <Icon as={ArrowLeft} className="text-foreground size-6" strokeWidth={1.75} />
-      </Pressable>
+      <View className="flex-row items-center justify-between">
+        <Pressable
+          onPress={() => router.back()}
+          hitSlop={12}
+          className="active:bg-muted size-10 items-center justify-center rounded-full">
+          <Icon as={ArrowLeft} className="text-foreground size-6" strokeWidth={1.75} />
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            haptics.select();
+            router.push(`/event/${eventId}/broadcasts`);
+          }}
+          hitSlop={12}
+          className="active:bg-muted size-10 items-center justify-center rounded-full">
+          <Icon as={Megaphone} className="text-foreground size-6" strokeWidth={1.75} />
+        </Pressable>
+      </View>
 
       {event ? (
         <>
