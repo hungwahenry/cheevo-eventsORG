@@ -1,14 +1,14 @@
-import { Icon } from '@/components/ui/icon';
 import { IconInput } from '@/components/ui/icon-input';
+import { Icon } from '@/components/ui/icon';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
-import { AttendeeRow } from '@/features/checkin/components/attendee-row';
 import { useIssuedTickets, useRevokeTicket, useScanTicket } from '@/features/checkin';
+import { AttendeeRow } from '@/features/checkin/components/attendee-row';
 import { holderName, type IssuedTicket, type IssuedTicketStatus } from '@/features/checkin/types';
 import { haptics } from '@/lib/haptics';
 import { useDebouncedValue } from '@/lib/use-debounced-value';
-import { router, useLocalSearchParams } from 'expo-router';
-import { ArrowLeft, Search, Users } from 'lucide-react-native';
+import { useLocalSearchParams } from 'expo-router';
+import { Search, Users } from 'lucide-react-native';
 import { useState } from 'react';
 import { Alert, FlatList, Pressable, RefreshControl, View } from 'react-native';
 import { toast } from 'sonner-native';
@@ -20,7 +20,7 @@ const FILTERS: { label: string; value: IssuedTicketStatus | undefined }[] = [
   { label: 'Revoked', value: 'revoked' },
 ];
 
-export default function AttendeesScreen() {
+export default function AttendeesTab() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const [status, setStatus] = useState<IssuedTicketStatus | undefined>(undefined);
   const [search, setSearch] = useState('');
@@ -31,7 +31,6 @@ export default function AttendeesScreen() {
   const revoke = useRevokeTicket(id);
 
   const items = query.data?.pages.flatMap((p) => p.items) ?? [];
-  const total = query.data?.pages[0]?.total ?? 0;
 
   function checkIn(ticket: IssuedTicket) {
     haptics.select();
@@ -62,23 +61,8 @@ export default function AttendeesScreen() {
   }
 
   return (
-    <View className="bg-background flex-1">
-      <View className="pt-safe-offset-4 gap-3 px-6 pb-2">
-        <Pressable
-          onPress={() => router.back()}
-          hitSlop={12}
-          className="active:bg-muted size-10 items-center justify-center rounded-full">
-          <Icon as={ArrowLeft} className="text-foreground size-6" strokeWidth={1.75} />
-        </Pressable>
-        <View>
-          <Text className="text-muted-foreground font-sans-medium text-xs uppercase tracking-wide">
-            {total.toLocaleString()} {total === 1 ? 'attendee' : 'attendees'}
-          </Text>
-          <Text className="text-foreground font-sans-extrabold text-2xl tracking-tight">
-            Attendees
-          </Text>
-        </View>
-
+    <View className="flex-1">
+      <View className="gap-3 px-6 pb-2 pt-4">
         <IconInput
           icon={Search}
           value={search}
@@ -88,7 +72,6 @@ export default function AttendeesScreen() {
           autoCorrect={false}
           returnKeyType="search"
         />
-
         <View className="flex-row gap-2">
           {FILTERS.map((f) => {
             const active = status === f.value;
@@ -145,7 +128,7 @@ export default function AttendeesScreen() {
             ) : null
           }
           ListEmptyComponent={
-            <View className="mt-24 items-center gap-3 px-6">
+            <View className="mt-16 items-center gap-3 px-6">
               <View className="bg-muted size-16 items-center justify-center rounded-full">
                 <Icon as={Users} className="text-muted-foreground size-8" strokeWidth={2} />
               </View>

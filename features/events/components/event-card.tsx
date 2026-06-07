@@ -17,7 +17,7 @@ export function EventCard({ event }: { event: EventItem }) {
     <Pressable
       onPress={() => {
         haptics.select();
-        router.push(`/event/${event.id}`);
+        router.push(`/event/${event.id}/attendees`);
       }}
       className="bg-card active:bg-muted/40 gap-3 rounded-2xl p-4">
       <View className="flex-row items-start justify-between gap-3">
