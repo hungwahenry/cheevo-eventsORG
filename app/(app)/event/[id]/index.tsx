@@ -8,9 +8,8 @@ import { SalesSummary } from '@/features/events/sales/components/sales-summary';
 import { formatShortDateTime } from '@/lib/format/datetime';
 import { haptics } from '@/lib/haptics';
 import { router, useLocalSearchParams } from 'expo-router';
-import { ArrowLeft, MapPin, ScanLine } from 'lucide-react-native';
+import { ArrowLeft, MapPin, ScanLine, Users } from 'lucide-react-native';
 import { Pressable, ScrollView, View } from 'react-native';
-import { toast } from 'sonner-native';
 
 export default function EventDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -57,16 +56,29 @@ export default function EventDetailScreen() {
             </View>
           </View>
 
-          <Button
-            size="lg"
-            className="w-full"
-            onPress={() => {
-              haptics.select();
-              toast('Door scanning lands in the next update.');
-            }}>
-            <Icon as={ScanLine} className="text-primary-foreground size-5" strokeWidth={2} />
-            <Text>Check in at the door</Text>
-          </Button>
+          <View className="gap-3">
+            <Button
+              size="lg"
+              className="w-full"
+              onPress={() => {
+                haptics.select();
+                router.push(`/event/${event.id}/scan`);
+              }}>
+              <Icon as={ScanLine} className="text-primary-foreground size-5" strokeWidth={2} />
+              <Text>Check in at the door</Text>
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="w-full"
+              onPress={() => {
+                haptics.select();
+                router.push(`/event/${event.id}/attendees`);
+              }}>
+              <Icon as={Users} className="text-foreground size-5" strokeWidth={2} />
+              <Text>Attendees</Text>
+            </Button>
+          </View>
 
           <SalesSummary eventId={event.id} />
         </ScrollView>

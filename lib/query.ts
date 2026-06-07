@@ -5,7 +5,8 @@ import { isApiError } from '@/lib/api/errors';
 
 export const queryClient = new QueryClient({
   mutationCache: new MutationCache({
-    onError: (error) => {
+    onError: (error, _variables, _context, mutation) => {
+      if (mutation.meta?.silent) return;
       if (isApiError(error) && error.isValidation) return;
       toast.error(isApiError(error) ? error.message : 'Something went wrong. Please try again.');
     },
