@@ -1,17 +1,18 @@
 import { Icon } from '@/components/ui/icon';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
+import { UserAvatar } from '@/components/user-avatar';
 import { useEventOrder } from '@/features/orders';
 import { OrderStatusBadge } from '@/features/orders/components/order-status-badge';
 import { buyerName } from '@/features/orders/types';
 import { formatShortDateTime } from '@/lib/format/datetime';
 import { formatMoney } from '@/lib/format/money';
-import { router, useLocalSearchParams } from 'expo-router';
+import { router, useGlobalSearchParams } from 'expo-router';
 import { ArrowLeft } from 'lucide-react-native';
 import { Pressable, ScrollView, View } from 'react-native';
 
 export default function OrderDetailScreen() {
-  const { id, orderId } = useLocalSearchParams<{ id: string; orderId: string }>();
+  const { id, orderId } = useGlobalSearchParams<{ id: string; orderId: string }>();
   const { data: order, isLoading } = useEventOrder(id, orderId);
 
   return (
@@ -35,12 +36,19 @@ export default function OrderDetailScreen() {
           showsVerticalScrollIndicator={false}>
           <View className="gap-3">
             <OrderStatusBadge status={order.status} />
-            <Text className="text-foreground font-sans-extrabold text-2xl tracking-tight">
-              {buyerName(order.buyer)}
-            </Text>
-            {order.buyer.email ? (
-              <Text className="text-muted-foreground text-sm">{order.buyer.email}</Text>
-            ) : null}
+            <View className="flex-row items-center gap-3">
+              <UserAvatar url={order.buyer.avatar_url} name={buyerName(order.buyer)} size={48} />
+              <View className="flex-1 gap-0.5">
+                <Text className="text-foreground font-sans-extrabold text-2xl tracking-tight">
+                  {buyerName(order.buyer)}
+                </Text>
+                {order.buyer.email ? (
+                  <Text className="text-muted-foreground text-sm" numberOfLines={1}>
+                    {order.buyer.email}
+                  </Text>
+                ) : null}
+              </View>
+            </View>
           </View>
 
           {order.items && order.items.length > 0 ? (

@@ -7,7 +7,7 @@ import { AttendeeRow } from '@/features/checkin/components/attendee-row';
 import { holderName, type IssuedTicket, type IssuedTicketStatus } from '@/features/checkin/types';
 import { haptics } from '@/lib/haptics';
 import { useDebouncedValue } from '@/lib/use-debounced-value';
-import { useLocalSearchParams } from 'expo-router';
+import { useGlobalSearchParams } from 'expo-router';
 import { Search, Users } from 'lucide-react-native';
 import { useState } from 'react';
 import { Alert, FlatList, Pressable, RefreshControl, View } from 'react-native';
@@ -21,7 +21,7 @@ const FILTERS: { label: string; value: IssuedTicketStatus | undefined }[] = [
 ];
 
 export default function AttendeesTab() {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id } = useGlobalSearchParams<{ id: string }>();
   const [status, setStatus] = useState<IssuedTicketStatus | undefined>(undefined);
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebouncedValue(search.trim(), 350);

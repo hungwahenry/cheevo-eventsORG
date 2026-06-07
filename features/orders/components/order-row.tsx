@@ -1,4 +1,5 @@
 import { Text } from '@/components/ui/text';
+import { UserAvatar } from '@/components/user-avatar';
 import { OrderStatusBadge } from '@/features/orders/components/order-status-badge';
 import { buyerName, type EventOrder } from '@/features/orders/types';
 import { formatShortDateTime } from '@/lib/format/datetime';
@@ -16,13 +17,16 @@ export function OrderRow({ order, eventId }: { order: EventOrder; eventId: strin
       }}
       className="bg-card active:bg-muted/40 gap-3 rounded-2xl p-4">
       <View className="flex-row items-start justify-between gap-3">
-        <View className="flex-1 gap-0.5">
-          <Text className="text-foreground font-sans-semibold text-base" numberOfLines={1}>
-            {buyerName(order.buyer)}
-          </Text>
-          <Text className="text-muted-foreground text-sm">
-            {order.items_count} {order.items_count === 1 ? 'ticket' : 'tickets'}
-          </Text>
+        <View className="flex-1 flex-row items-center gap-3">
+          <UserAvatar url={order.buyer.avatar_url} name={buyerName(order.buyer)} size={40} />
+          <View className="flex-1 gap-0.5">
+            <Text className="text-foreground font-sans-semibold text-base" numberOfLines={1}>
+              {buyerName(order.buyer)}
+            </Text>
+            <Text className="text-muted-foreground text-sm">
+              {order.items_count} {order.items_count === 1 ? 'ticket' : 'tickets'}
+            </Text>
+          </View>
         </View>
         <OrderStatusBadge status={order.status} />
       </View>

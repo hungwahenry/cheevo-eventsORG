@@ -5,7 +5,7 @@ import { useEventOrders } from '@/features/orders';
 import { OrderRow } from '@/features/orders/components/order-row';
 import type { OrderStatus } from '@/features/orders/types';
 import { haptics } from '@/lib/haptics';
-import { useLocalSearchParams } from 'expo-router';
+import { useGlobalSearchParams } from 'expo-router';
 import { Receipt } from 'lucide-react-native';
 import { useState } from 'react';
 import { FlatList, Pressable, RefreshControl, View } from 'react-native';
@@ -18,7 +18,7 @@ const FILTERS: { label: string; value: OrderStatus | undefined }[] = [
 ];
 
 export default function OrdersTab() {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id } = useGlobalSearchParams<{ id: string }>();
   const [status, setStatus] = useState<OrderStatus | undefined>(undefined);
   const query = useEventOrders(id, status);
 
