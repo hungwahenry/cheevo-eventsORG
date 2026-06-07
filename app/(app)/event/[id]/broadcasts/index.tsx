@@ -1,5 +1,5 @@
-import { EmptyState } from '@/components/empty-state';
-import { ScreenHeader } from '@/components/screen-header';
+import { EmptyState } from '@/components/ui/empty-state';
+import { ScreenHeader } from '@/components/ui/screen-header';
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { Spinner } from '@/components/ui/spinner';

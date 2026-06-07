@@ -1,5 +1,5 @@
-import { EmptyState } from '@/components/empty-state';
-import { FilterPills, type FilterOption } from '@/components/filter-pills';
+import { EmptyState } from '@/components/ui/empty-state';
+import { FilterPills, type FilterOption } from '@/components/ui/filter-pills';
 import { IconInput } from '@/components/ui/icon-input';
 import { Spinner } from '@/components/ui/spinner';
 import { useIssuedTickets, useRevokeTicket, useScanTicket } from '@/features/checkin';

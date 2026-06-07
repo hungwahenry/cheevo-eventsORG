@@ -1,4 +1,4 @@
-import { BackButton } from '@/components/back-button';
+import { BackButton } from '@/components/ui/back-button';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { ScanFeedbackCard } from '@/features/checkin/components/scan-feedback-card';

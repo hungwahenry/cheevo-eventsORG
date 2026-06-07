@@ -1,4 +1,4 @@
-import { StatusBadge, type BadgeTone } from '@/components/status-badge';
+import { StatusBadge, type BadgeTone } from '@/components/ui/status-badge';
 import type { BroadcastStatus } from '@/features/broadcasts/types';
 
 const CONFIG: Record<BroadcastStatus, { tone: BadgeTone; label: string }> = {

@@ -1,4 +1,4 @@
-import { BackButton } from '@/components/back-button';
+import { BackButton } from '@/components/ui/back-button';
 import { Text } from '@/components/ui/text';
 import type { ReactNode } from 'react';
 import { View } from 'react-native';

@@ -1,4 +1,4 @@
-import { ScreenHeader } from '@/components/screen-header';
+import { ScreenHeader } from '@/components/ui/screen-header';
 import { Spinner } from '@/components/ui/spinner';
 import {
   useNotificationPreferences,

@@ -1,4 +1,4 @@
-import { EmptyState } from '@/components/empty-state';
+import { EmptyState } from '@/components/ui/empty-state';
 import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
 import { useSignOut } from '@/features/auth';

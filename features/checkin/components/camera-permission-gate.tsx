@@ -1,5 +1,5 @@
-import { BackButton } from '@/components/back-button';
-import { EmptyState } from '@/components/empty-state';
+import { BackButton } from '@/components/ui/back-button';
+import { EmptyState } from '@/components/ui/empty-state';
 import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
 import { useCameraPermissions } from 'expo-camera';

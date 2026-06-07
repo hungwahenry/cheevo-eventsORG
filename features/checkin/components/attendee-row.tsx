@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
-import { UserAvatar } from '@/components/user-avatar';
+import { UserAvatar } from '@/components/ui/user-avatar';
 import { TicketStatusBadge } from '@/features/checkin/components/ticket-status-badge';
 import { holderName, type IssuedTicket } from '@/features/checkin/types';
 import { formatTime } from '@/lib/format/datetime';

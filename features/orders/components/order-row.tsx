@@ -1,5 +1,5 @@
 import { Text } from '@/components/ui/text';
-import { UserAvatar } from '@/components/user-avatar';
+import { UserAvatar } from '@/components/ui/user-avatar';
 import { OrderStatusBadge } from '@/features/orders/components/order-status-badge';
 import { buyerName, type EventOrder } from '@/features/orders/types';
 import { formatShortDateTime } from '@/lib/format/datetime';

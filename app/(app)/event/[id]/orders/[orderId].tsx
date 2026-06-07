@@ -1,7 +1,7 @@
-import { ScreenHeader } from '@/components/screen-header';
+import { ScreenHeader } from '@/components/ui/screen-header';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
-import { UserAvatar } from '@/components/user-avatar';
+import { UserAvatar } from '@/components/ui/user-avatar';
 import { useEventOrder } from '@/features/orders';
 import { OrderStatusBadge } from '@/features/orders/components/order-status-badge';
 import { buyerName } from '@/features/orders/types';
