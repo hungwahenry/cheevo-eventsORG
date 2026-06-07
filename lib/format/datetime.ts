@@ -42,6 +42,14 @@ export function formatRelativeShort(iso: string | null): string | null {
   return formatShortDate(iso);
 }
 
+export function formatMonthYear(iso: string | null): string | null {
+  if (!iso) return null;
+  return new Date(iso).toLocaleDateString(undefined, {
+    month: 'short',
+    year: 'numeric',
+  });
+}
+
 export function formatDateRange(starts: string | null, ends: string | null): string | null {
   if (!starts && !ends) return null;
   if (starts && ends) return `${formatShortDate(starts)} – ${formatShortDate(ends)}`;

@@ -50,6 +50,9 @@ export type Organisation = {
   contact_phone: string | null;
   website: string | null;
   city: string | null;
+  events_count: number;
+  subscribers_count: number;
+  hosting_since: string | null;
   category: OrganisationCategory | null;
   socials: OrganisationSocial[];
 };

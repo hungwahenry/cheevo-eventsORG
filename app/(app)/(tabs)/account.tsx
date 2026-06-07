@@ -1,19 +1,13 @@
 import { Button } from '@/components/ui/button';
-import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { useCurrentUser, useSignOut } from '@/features/auth';
-import { haptics } from '@/lib/haptics';
+import { AccountHeader } from '@/features/account/components/account-header';
+import { ProfileStats } from '@/features/account/components/profile-stats';
+import { SettingsDivider, SettingsRow } from '@/features/account/components/settings-row';
+import { KpiGrid } from '@/features/dashboard/components/kpi-grid';
 import { router } from 'expo-router';
-import {
-  Bell,
-  Building2,
-  ChevronRight,
-  Download,
-  Mail,
-  Trash2,
-  type LucideIcon,
-} from 'lucide-react-native';
-import { Image, Pressable, ScrollView, View } from 'react-native';
+import { Bell, Download, Mail, Trash2 } from 'lucide-react-native';
+import { ScrollView, View } from 'react-native';
 
 export default function AccountScreen() {
   const user = useCurrentUser();
@@ -26,17 +20,10 @@ export default function AccountScreen() {
         contentContainerStyle={{ padding: 24, gap: 24 }}
         className="pt-safe-offset-4"
         showsVerticalScrollIndicator={false}>
-        <View className="items-center gap-3">
-          <OrgLogo logoUrl={org?.logo_url ?? null} />
-          <View className="items-center gap-1">
-            <Text className="text-foreground font-sans-extrabold text-2xl tracking-tight">
-              {org?.name ?? 'cheevo'}
-            </Text>
-            {user?.email ? (
-              <Text className="text-muted-foreground text-sm">{user.email}</Text>
-            ) : null}
-          </View>
-        </View>
+        <AccountHeader org={org} email={user?.email} />
+
+        {org ? <ProfileStats org={org} /> : null}
+        {org ? <KpiGrid orgId={org.id} /> : null}
 
         <View className="bg-card overflow-hidden rounded-2xl">
           <SettingsRow
@@ -44,19 +31,19 @@ export default function AccountScreen() {
             label="Notifications"
             onPress={() => router.push('/account/notifications')}
           />
-          <Divider />
+          <SettingsDivider />
           <SettingsRow
             icon={Mail}
             label="Change email"
             onPress={() => router.push('/account/email')}
           />
-          <Divider />
+          <SettingsDivider />
           <SettingsRow
             icon={Download}
             label="Export my data"
             onPress={() => router.push('/account/data-export')}
           />
-          <Divider />
+          <SettingsDivider />
           <SettingsRow
             icon={Trash2}
             label="Delete account"
@@ -74,66 +61,6 @@ export default function AccountScreen() {
           <Text>Sign out</Text>
         </Button>
       </ScrollView>
-    </View>
-  );
-}
-
-function Divider() {
-  return <View className="bg-border ml-16 h-px" />;
-}
-
-function SettingsRow({
-  icon,
-  label,
-  onPress,
-  tone = 'default',
-}: {
-  icon: LucideIcon;
-  label: string;
-  onPress: () => void;
-  tone?: 'default' | 'danger';
-}) {
-  const danger = tone === 'danger';
-  return (
-    <Pressable
-      onPress={() => {
-        haptics.select();
-        onPress();
-      }}
-      className="active:bg-muted/40 flex-row items-center gap-3 p-4">
-      <View
-        className={`size-10 items-center justify-center rounded-xl ${
-          danger ? 'bg-destructive/10' : 'bg-muted'
-        }`}>
-        <Icon
-          as={icon}
-          className={danger ? 'text-destructive size-5' : 'text-foreground size-5'}
-          strokeWidth={2}
-        />
-      </View>
-      <Text
-        className={`font-sans-medium flex-1 text-base ${
-          danger ? 'text-destructive' : 'text-foreground'
-        }`}>
-        {label}
-      </Text>
-      <Icon as={ChevronRight} className="text-muted-foreground size-5" />
-    </Pressable>
-  );
-}
-
-function OrgLogo({ logoUrl }: { logoUrl: string | null }) {
-  if (!logoUrl) {
-    return (
-      <View className="bg-muted size-24 items-center justify-center rounded-2xl">
-        <Icon as={Building2} className="text-muted-foreground size-10" strokeWidth={2} />
-      </View>
-    );
-  }
-
-  return (
-    <View className="border-border size-24 overflow-hidden rounded-2xl border">
-      <Image source={{ uri: logoUrl }} style={{ flex: 1 }} resizeMode="cover" />
     </View>
   );
 }
