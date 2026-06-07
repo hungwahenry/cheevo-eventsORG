@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import "uniwind";
 
-@import "tw-animate-css"; 
+@import "tw-animate-css";
 
 @theme {
   --radius: 10px;
@@ -11,18 +11,25 @@
   --radius-xl: calc(var(--radius) + 4px);
 
   --spacing-hairline: hairlineWidth();
+
+  --font-sans: 'Geist_400Regular';
+  --font-sans-medium: 'Geist_500Medium';
+  --font-sans-semibold: 'Geist_600SemiBold';
+  --font-sans-bold: 'Geist_700Bold';
+  --font-sans-extrabold: 'Geist_800ExtraBold';
+  --font-sans-black: 'Geist_900Black';
 }
 
 @layer theme {
   :root {
     @variant light {
-    --color-background:  oklch(1 0 0);
+    --color-background:  oklch(0.982 0.005 90);
     --color-foreground:  oklch(0.145 0 0);
     --color-card:  oklch(1 0 0);
     --color-card-foreground:  oklch(0.145 0 0);
     --color-popover:  oklch(1 0 0);
     --color-popover-foreground:  oklch(0.145 0 0);
-    --color-primary:  oklch(0.205 0 0);
+    --color-primary:  oklch(0.671 0.212 39.1);
     --color-primary-foreground:  oklch(0.985 0 0);
     --color-secondary:  oklch(0.97 0 0);
     --color-secondary-foreground:  oklch(0.205 0 0);
@@ -56,8 +63,8 @@
       --color-card-foreground:  oklch(0.985 0 0);
       --color-popover:  oklch(0.205 0 0);
       --color-popover-foreground:  oklch(0.985 0 0);
-      --color-primary:  oklch(0.922 0 0);
-      --color-primary-foreground:  oklch(0.205 0 0);
+      --color-primary:  oklch(0.671 0.212 39.1);
+      --color-primary-foreground:  oklch(0.985 0 0);
       --color-secondary:  oklch(0.269 0 0);
       --color-secondary-foreground:  oklch(0.985 0 0);
       --color-muted:  oklch(0.269 0 0);
@@ -84,4 +91,3 @@
     }
   }
 }
-
