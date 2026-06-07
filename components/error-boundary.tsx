@@ -1,5 +1,5 @@
+import { EmptyState } from '@/components/empty-state';
 import { Button } from '@/components/ui/button';
-import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { TriangleAlert } from 'lucide-react-native';
 import { View } from 'react-native';
@@ -12,23 +12,19 @@ type Props = {
 export function AppErrorBoundary({ retry }: Props) {
   return (
     <View className="bg-background flex-1 items-center justify-center px-6">
-      <View className="bg-muted/40 items-center gap-3 rounded-2xl p-8">
-        <View className="bg-destructive/10 size-16 items-center justify-center rounded-full">
-          <Icon as={TriangleAlert} className="text-destructive size-8" strokeWidth={2} />
-        </View>
-        <Text className="text-foreground font-sans-semibold text-center text-xl">
-          Something went wrong
-        </Text>
-        <Text className="text-muted-foreground text-center text-sm">
-          The app hit an unexpected error. Try again — if it keeps happening, please reach out.
-        </Text>
-      </View>
-
-      <View className="mt-6 w-full max-w-xs">
-        <Button size="lg" className="w-full" onPress={retry}>
-          <Text>Try again</Text>
-        </Button>
-      </View>
+      <EmptyState
+        icon={TriangleAlert}
+        tone="danger"
+        title="Something went wrong"
+        message="The app hit an unexpected error. Try again — if it keeps happening, please reach out."
+        action={
+          <View className="mt-4 w-full max-w-xs">
+            <Button size="lg" className="w-full" onPress={retry}>
+              <Text>Try again</Text>
+            </Button>
+          </View>
+        }
+      />
     </View>
   );
 }

@@ -1,4 +1,4 @@
-import { Icon } from '@/components/ui/icon';
+import { EmptyState } from '@/components/empty-state';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
 import { useCurrentUser } from '@/features/auth';
@@ -38,17 +38,12 @@ export default function EventsHome() {
           showsVerticalScrollIndicator={false}
           refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
           ListEmptyComponent={
-            <View className="mt-24 items-center gap-3 px-6">
-              <View className="bg-muted size-16 items-center justify-center rounded-full">
-                <Icon as={CalendarX} className="text-muted-foreground size-8" strokeWidth={2} />
-              </View>
-              <Text className="text-foreground font-sans-semibold text-center text-lg">
-                No events yet
-              </Text>
-              <Text className="text-muted-foreground text-center text-sm">
-                Create your first event on the cheevo web dashboard. It&apos;ll show up here.
-              </Text>
-            </View>
+            <EmptyState
+              icon={CalendarX}
+              title="No events yet"
+              message="Create your first event on the cheevo web dashboard. It'll show up here."
+              className="mt-24"
+            />
           }
         />
       )}

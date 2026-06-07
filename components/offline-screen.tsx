@@ -1,5 +1,5 @@
+import { EmptyState } from '@/components/empty-state';
 import { Button } from '@/components/ui/button';
-import { Icon } from '@/components/ui/icon';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
 import { useNetwork } from '@/lib/network';
@@ -22,27 +22,23 @@ export function OfflineScreen() {
 
   return (
     <View className="bg-background flex-1 items-center justify-center px-6">
-      <View className="bg-muted/40 items-center gap-3 rounded-2xl p-8">
-        <View className="bg-destructive/10 size-16 items-center justify-center rounded-full">
-          <Icon as={WifiOff} className="text-destructive size-8" strokeWidth={2} />
-        </View>
-        <Text className="text-foreground font-sans-semibold text-center text-xl">
-          No Internet Connection
-        </Text>
-        <Text className="text-muted-foreground text-center text-sm">
-          cheevo needs an internet connection. Check your Wi-Fi or cellular data and try again.
-        </Text>
-      </View>
-
-      <View className="mt-6 w-full max-w-xs">
-        <Button size="lg" className="w-full" disabled={isRetrying} onPress={onRetry}>
-          {isRetrying ? (
-            <Spinner size="sm" barClassName="bg-primary-foreground" />
-          ) : (
-            <Text>Try again</Text>
-          )}
-        </Button>
-      </View>
+      <EmptyState
+        icon={WifiOff}
+        tone="danger"
+        title="No internet connection"
+        message="cheevo needs an internet connection. Check your Wi-Fi or cellular data and try again."
+        action={
+          <View className="mt-4 w-full max-w-xs">
+            <Button size="lg" className="w-full" disabled={isRetrying} onPress={onRetry}>
+              {isRetrying ? (
+                <Spinner size="sm" barClassName="bg-primary-foreground" />
+              ) : (
+                <Text>Try again</Text>
+              )}
+            </Button>
+          </View>
+        }
+      />
     </View>
   );
 }

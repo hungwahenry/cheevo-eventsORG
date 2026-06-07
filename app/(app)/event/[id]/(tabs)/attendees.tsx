@@ -1,7 +1,7 @@
+import { EmptyState } from '@/components/empty-state';
+import { FilterPills, type FilterOption } from '@/components/filter-pills';
 import { IconInput } from '@/components/ui/icon-input';
-import { Icon } from '@/components/ui/icon';
 import { Spinner } from '@/components/ui/spinner';
-import { Text } from '@/components/ui/text';
 import { useIssuedTickets, useRevokeTicket, useScanTicket } from '@/features/checkin';
 import { AttendeeRow } from '@/features/checkin/components/attendee-row';
 import { holderName, type IssuedTicket, type IssuedTicketStatus } from '@/features/checkin/types';
@@ -10,10 +10,10 @@ import { useDebouncedValue } from '@/lib/use-debounced-value';
 import { useGlobalSearchParams } from 'expo-router';
 import { Search, Users } from 'lucide-react-native';
 import { useState } from 'react';
-import { Alert, FlatList, Pressable, RefreshControl, View } from 'react-native';
+import { Alert, FlatList, RefreshControl, View } from 'react-native';
 import { toast } from 'sonner-native';
 
-const FILTERS: { label: string; value: IssuedTicketStatus | undefined }[] = [
+const FILTERS: FilterOption<IssuedTicketStatus | undefined>[] = [
   { label: 'All', value: undefined },
   { label: 'Valid', value: 'valid' },
   { label: 'Checked in', value: 'scanned' },
@@ -72,27 +72,7 @@ export default function AttendeesTab() {
           autoCorrect={false}
           returnKeyType="search"
         />
-        <View className="flex-row gap-2">
-          {FILTERS.map((f) => {
-            const active = status === f.value;
-            return (
-              <Pressable
-                key={f.label}
-                onPress={() => {
-                  haptics.select();
-                  setStatus(f.value);
-                }}
-                className={`rounded-full px-3 py-1.5 ${active ? 'bg-primary' : 'bg-muted'}`}>
-                <Text
-                  className={`font-sans-medium text-xs ${
-                    active ? 'text-primary-foreground' : 'text-muted-foreground'
-                  }`}>
-                  {f.label}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </View>
+        <FilterPills options={FILTERS} value={status} onChange={setStatus} />
       </View>
 
       {query.isLoading ? (
@@ -128,17 +108,12 @@ export default function AttendeesTab() {
             ) : null
           }
           ListEmptyComponent={
-            <View className="mt-16 items-center gap-3 px-6">
-              <View className="bg-muted size-16 items-center justify-center rounded-full">
-                <Icon as={Users} className="text-muted-foreground size-8" strokeWidth={2} />
-              </View>
-              <Text className="text-foreground font-sans-semibold text-center text-lg">
-                No attendees
-              </Text>
-              <Text className="text-muted-foreground text-center text-sm">
-                {debouncedSearch ? 'No matches for your search.' : 'No tickets issued yet.'}
-              </Text>
-            </View>
+            <EmptyState
+              icon={Users}
+              title="No attendees"
+              message={debouncedSearch ? 'No matches for your search.' : 'No tickets issued yet.'}
+              className="mt-16"
+            />
           }
         />
       )}

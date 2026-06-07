@@ -1,4 +1,4 @@
-import { Icon } from '@/components/ui/icon';
+import { EmptyState } from '@/components/empty-state';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
 import {
@@ -79,17 +79,12 @@ export default function ActivityScreen() {
             ) : null
           }
           ListEmptyComponent={
-            <View className="mt-24 items-center gap-3 px-6">
-              <View className="bg-muted size-16 items-center justify-center rounded-full">
-                <Icon as={Bell} className="text-muted-foreground size-8" strokeWidth={2} />
-              </View>
-              <Text className="text-foreground font-sans-semibold text-center text-lg">
-                Nothing yet
-              </Text>
-              <Text className="text-muted-foreground text-center text-sm">
-                Sales, orders, and payout updates will show up here.
-              </Text>
-            </View>
+            <EmptyState
+              icon={Bell}
+              title="Nothing yet"
+              message="Sales, orders, and payout updates will show up here."
+              className="mt-24"
+            />
           }
         />
       )}

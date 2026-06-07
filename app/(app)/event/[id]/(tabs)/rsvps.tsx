@@ -1,4 +1,4 @@
-import { Icon } from '@/components/ui/icon';
+import { EmptyState } from '@/components/empty-state';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
 import { UserAvatar } from '@/components/user-avatar';
@@ -55,17 +55,12 @@ export default function RsvpsTab() {
             ) : null
           }
           ListEmptyComponent={
-            <View className="mt-16 items-center gap-3 px-6">
-              <View className="bg-muted size-16 items-center justify-center rounded-full">
-                <Icon as={CalendarCheck} className="text-muted-foreground size-8" strokeWidth={2} />
-              </View>
-              <Text className="text-foreground font-sans-semibold text-center text-lg">
-                No RSVPs yet
-              </Text>
-              <Text className="text-muted-foreground text-center text-sm">
-                People who RSVP to this event will show up here.
-              </Text>
-            </View>
+            <EmptyState
+              icon={CalendarCheck}
+              title="No RSVPs yet"
+              message="People who RSVP to this event will show up here."
+              className="mt-16"
+            />
           }
         />
       )}

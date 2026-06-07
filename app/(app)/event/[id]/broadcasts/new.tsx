@@ -1,5 +1,5 @@
+import { ScreenHeader } from '@/components/screen-header';
 import { Button } from '@/components/ui/button';
-import { Icon } from '@/components/ui/icon';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
@@ -9,7 +9,6 @@ import { SUBJECT_MAX, textToHtml, type BroadcastAudience } from '@/features/broa
 import { isApiError } from '@/lib/api';
 import { haptics } from '@/lib/haptics';
 import { router, useGlobalSearchParams } from 'expo-router';
-import { ArrowLeft } from 'lucide-react-native';
 import { useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
@@ -74,14 +73,7 @@ export default function NewBroadcastScreen() {
 
   return (
     <View className="bg-background flex-1">
-      <View className="pt-safe-offset-4 px-6 pb-2">
-        <Pressable
-          onPress={() => router.back()}
-          hitSlop={12}
-          className="active:bg-muted size-10 items-center justify-center rounded-full">
-          <Icon as={ArrowLeft} className="text-foreground size-6" strokeWidth={1.75} />
-        </Pressable>
-      </View>
+      <ScreenHeader />
 
       <KeyboardAwareScrollView
         bottomOffset={24}

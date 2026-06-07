@@ -1,6 +1,7 @@
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import type { InboxNotification } from '@/features/notifications/types';
+import { formatRelativeShort } from '@/lib/format/datetime';
 import { formatMoney } from '@/lib/format/money';
 import {
   Banknote,
@@ -74,19 +75,6 @@ function presentationFor(notification: InboxNotification): Presentation {
   }
 }
 
-function relativeTime(iso: string): string {
-  const date = new Date(iso);
-  const diffSec = Math.max(1, Math.round((Date.now() - date.getTime()) / 1000));
-  if (diffSec < 60) return `${diffSec}s`;
-  const diffMin = Math.round(diffSec / 60);
-  if (diffMin < 60) return `${diffMin}m`;
-  const diffHr = Math.round(diffMin / 60);
-  if (diffHr < 24) return `${diffHr}h`;
-  const diffDay = Math.round(diffHr / 24);
-  if (diffDay < 7) return `${diffDay}d`;
-  return date.toLocaleDateString();
-}
-
 export function InboxRow({ notification, onPress }: Props) {
   const { icon, title, body } = presentationFor(notification);
   const isUnread = notification.read_at === null;
@@ -106,7 +94,7 @@ export function InboxRow({ notification, onPress }: Props) {
             {title}
           </Text>
           <Text className="text-muted-foreground text-xs">
-            {relativeTime(notification.created_at)}
+            {formatRelativeShort(notification.created_at)}
           </Text>
         </View>
 

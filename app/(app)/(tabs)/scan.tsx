@@ -1,3 +1,4 @@
+import { EmptyState } from '@/components/empty-state';
 import { Icon } from '@/components/ui/icon';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
@@ -56,17 +57,12 @@ export default function ScanScreen() {
           showsVerticalScrollIndicator={false}
           refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
           ListEmptyComponent={
-            <View className="mt-24 items-center gap-3 px-6">
-              <View className="bg-muted size-16 items-center justify-center rounded-full">
-                <Icon as={ScanLine} className="text-muted-foreground size-8" strokeWidth={2} />
-              </View>
-              <Text className="text-foreground font-sans-semibold text-center text-lg">
-                No events to scan
-              </Text>
-              <Text className="text-muted-foreground text-center text-sm">
-                Your events will appear here once they&apos;re created on the web dashboard.
-              </Text>
-            </View>
+            <EmptyState
+              icon={ScanLine}
+              title="No events to scan"
+              message="Your events will appear here once they're created on the web dashboard."
+              className="mt-24"
+            />
           }
         />
       )}

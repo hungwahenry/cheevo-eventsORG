@@ -1,14 +1,11 @@
-import { Icon } from '@/components/ui/icon';
+import { ScreenHeader } from '@/components/screen-header';
 import { Spinner } from '@/components/ui/spinner';
-import { Text } from '@/components/ui/text';
 import {
   useNotificationPreferences,
   useUpdateNotificationPreference,
 } from '@/features/notifications';
 import { PreferenceTypeRow } from '@/features/notifications/components/preference-type-row';
-import { router } from 'expo-router';
-import { ArrowLeft } from 'lucide-react-native';
-import { Pressable, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 export default function NotificationSettingsScreen() {
   const { data, isLoading } = useNotificationPreferences();
@@ -18,20 +15,7 @@ export default function NotificationSettingsScreen() {
 
   return (
     <View className="bg-background flex-1">
-      <View className="pt-safe-offset-4 px-6 pb-2">
-        <Pressable
-          onPress={() => router.back()}
-          hitSlop={12}
-          className="active:bg-muted size-10 items-center justify-center rounded-full">
-          <Icon as={ArrowLeft} className="text-foreground size-6" strokeWidth={1.75} />
-        </Pressable>
-        <Text className="text-foreground font-sans-extrabold mt-2 text-2xl tracking-tight">
-          Notifications
-        </Text>
-        <Text className="text-muted-foreground mt-1 text-sm">
-          Choose how you hear about each update.
-        </Text>
-      </View>
+      <ScreenHeader title="Notifications" subtitle="Choose how you hear about each update." />
 
       {isLoading || !data ? (
         <View className="flex-1 items-center justify-center">

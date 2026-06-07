@@ -1,13 +1,12 @@
-import { Icon } from '@/components/ui/icon';
+import { ScreenHeader } from '@/components/screen-header';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
 import { useEventBroadcast } from '@/features/broadcasts';
 import { BroadcastStatusBadge } from '@/features/broadcasts/components/broadcast-status-badge';
 import { audienceLabel } from '@/features/broadcasts/types';
 import { formatShortDateTime } from '@/lib/format/datetime';
-import { router, useGlobalSearchParams } from 'expo-router';
-import { ArrowLeft } from 'lucide-react-native';
-import { Pressable, ScrollView, View } from 'react-native';
+import { useGlobalSearchParams } from 'expo-router';
+import { ScrollView, View } from 'react-native';
 
 export default function BroadcastDetailScreen() {
   const { id, broadcastId } = useGlobalSearchParams<{ id: string; broadcastId: string }>();
@@ -15,14 +14,7 @@ export default function BroadcastDetailScreen() {
 
   return (
     <View className="bg-background flex-1">
-      <View className="pt-safe-offset-4 px-6 pb-2">
-        <Pressable
-          onPress={() => router.back()}
-          hitSlop={12}
-          className="active:bg-muted size-10 items-center justify-center rounded-full">
-          <Icon as={ArrowLeft} className="text-foreground size-6" strokeWidth={1.75} />
-        </Pressable>
-      </View>
+      <ScreenHeader />
 
       {isLoading || !broadcast ? (
         <View className="flex-1 items-center justify-center">

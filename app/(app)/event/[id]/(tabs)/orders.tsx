@@ -1,16 +1,15 @@
-import { Icon } from '@/components/ui/icon';
+import { EmptyState } from '@/components/empty-state';
+import { FilterPills, type FilterOption } from '@/components/filter-pills';
 import { Spinner } from '@/components/ui/spinner';
-import { Text } from '@/components/ui/text';
 import { useEventOrders } from '@/features/orders';
 import { OrderRow } from '@/features/orders/components/order-row';
 import type { OrderStatus } from '@/features/orders/types';
-import { haptics } from '@/lib/haptics';
 import { useGlobalSearchParams } from 'expo-router';
 import { Receipt } from 'lucide-react-native';
 import { useState } from 'react';
-import { FlatList, Pressable, RefreshControl, View } from 'react-native';
+import { FlatList, RefreshControl, View } from 'react-native';
 
-const FILTERS: { label: string; value: OrderStatus | undefined }[] = [
+const FILTERS: FilterOption<OrderStatus | undefined>[] = [
   { label: 'All', value: undefined },
   { label: 'Paid', value: 'paid' },
   { label: 'Pending', value: 'pending' },
@@ -27,27 +26,7 @@ export default function OrdersTab() {
   return (
     <View className="flex-1">
       <View className="px-6 pb-2 pt-4">
-        <View className="flex-row gap-2">
-          {FILTERS.map((f) => {
-            const active = status === f.value;
-            return (
-              <Pressable
-                key={f.label}
-                onPress={() => {
-                  haptics.select();
-                  setStatus(f.value);
-                }}
-                className={`rounded-full px-3 py-1.5 ${active ? 'bg-primary' : 'bg-muted'}`}>
-                <Text
-                  className={`font-sans-medium text-xs ${
-                    active ? 'text-primary-foreground' : 'text-muted-foreground'
-                  }`}>
-                  {f.label}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </View>
+        <FilterPills options={FILTERS} value={status} onChange={setStatus} />
       </View>
 
       {query.isLoading ? (
@@ -76,17 +55,12 @@ export default function OrdersTab() {
             ) : null
           }
           ListEmptyComponent={
-            <View className="mt-16 items-center gap-3 px-6">
-              <View className="bg-muted size-16 items-center justify-center rounded-full">
-                <Icon as={Receipt} className="text-muted-foreground size-8" strokeWidth={2} />
-              </View>
-              <Text className="text-foreground font-sans-semibold text-center text-lg">
-                No orders
-              </Text>
-              <Text className="text-muted-foreground text-center text-sm">
-                Orders will appear here as tickets sell.
-              </Text>
-            </View>
+            <EmptyState
+              icon={Receipt}
+              title="No orders"
+              message="Orders will appear here as tickets sell."
+              className="mt-16"
+            />
           }
         />
       )}
