@@ -1,6 +1,7 @@
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { useCurrentUser } from '@/features/auth';
+import { useUnreadCount } from '@/features/notifications';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { CalendarDays, ScanLine, Bell, UserRound, type LucideIcon } from 'lucide-react-native';
 import { Image, Pressable, View } from 'react-native';
@@ -60,7 +61,24 @@ function tintClass(focused: boolean): string {
 
 function TabIcon({ route, icon, focused }: { route: string; icon: LucideIcon; focused: boolean }) {
   if (route === 'account') return <OrgLogo fallback={icon} focused={focused} />;
+  if (route === 'activity') return <ActivityIcon icon={icon} focused={focused} />;
   return <Icon as={icon} className={tintClass(focused)} size={22} strokeWidth={2} />;
+}
+
+function ActivityIcon({ icon, focused }: { icon: LucideIcon; focused: boolean }) {
+  const { data } = useUnreadCount();
+  const unread = data?.unread ?? 0;
+
+  return (
+    <View>
+      <Icon as={icon} className={tintClass(focused)} size={22} strokeWidth={2} />
+      {unread > 0 ? (
+        <View className="absolute -right-1.5 -top-1 h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1">
+          <Text className="font-sans-bold text-[10px] text-white">{unread > 99 ? '99+' : unread}</Text>
+        </View>
+      ) : null}
+    </View>
+  );
 }
 
 function OrgLogo({ fallback, focused }: { fallback: LucideIcon; focused: boolean }) {

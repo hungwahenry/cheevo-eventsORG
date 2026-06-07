@@ -3,7 +3,13 @@ import '@/global.css';
 import { OfflineBanner } from '@/components/offline-banner';
 import { OfflineScreen } from '@/components/offline-screen';
 import { useAuthBootstrap, useSessionStore } from '@/features/auth';
+import {
+  useBadgeSync,
+  useNotificationResponseListener,
+  usePushTokenRegistration,
+} from '@/features/notifications';
 import { NetworkProvider, useNetwork } from '@/lib/network';
+import { configureForegroundHandler } from '@/lib/notifications';
 import { queryClient } from '@/lib/query';
 import { bindReactQueryFocusToAppState } from '@/lib/react-query-focus';
 import { NAV_THEME } from '@/lib/theme';
@@ -33,6 +39,13 @@ export { AppErrorBoundary as ErrorBoundary } from '@/components/error-boundary';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
+configureForegroundHandler();
+
+function NotificationsRuntime() {
+  useBadgeSync();
+  return null;
+}
+
 export default function RootLayout() {
   const { theme } = useUniwind();
 
@@ -46,6 +59,8 @@ export default function RootLayout() {
   });
 
   useAuthBootstrap();
+  usePushTokenRegistration();
+  useNotificationResponseListener();
 
   useEffect(() => {
     Uniwind.setTheme('system');
@@ -62,6 +77,7 @@ export default function RootLayout() {
           <NetworkProvider>
             <SafeAreaListener onChange={({ insets }) => Uniwind.updateInsets(insets)}>
               <QueryClientProvider client={queryClient}>
+                <NotificationsRuntime />
                 <ThemeProvider value={NAV_THEME[theme ?? 'light']}>
                   <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
                   <NetworkGate>

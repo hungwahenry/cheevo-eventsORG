@@ -4,6 +4,8 @@ import { useShallow } from 'zustand/react/shallow';
 import { clearToken, getToken, setToken } from '@/lib/api';
 import * as authApi from '@/features/auth/api';
 import type { User } from '@/features/auth/types';
+import * as notificationsApi from '@/features/notifications/api';
+import { getCurrentExpoPushToken } from '@/lib/notifications';
 
 export type SessionStatus = 'loading' | 'authenticated' | 'unauthenticated';
 
@@ -45,6 +47,11 @@ export const useSessionStore = create<SessionState>((set) => ({
   setUser: (user) => set({ user }),
 
   signOut: async () => {
+    try {
+      const pushToken = await getCurrentExpoPushToken();
+      if (pushToken) await notificationsApi.unregisterPushToken(pushToken);
+    } catch {}
+
     try {
       await authApi.logout();
     } catch {}
