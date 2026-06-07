@@ -17,14 +17,22 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.henryhh.cheevoorganizer"
+      "bundleIdentifier": "events.cheevo.organizer"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.henryhh.cheevoorganizer"
+      "package": "events.cheevo.organizer",
+      "googleServicesFile": "./google-services.json",
+      "permissions": ["android.permission.CAMERA"],
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.SYSTEM_ALERT_WINDOW"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -44,6 +52,19 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "owner": "henryhh",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "32c339de-68e2-4d24-a8dc-151fcbe4a447"
+      }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/32c339de-68e2-4d24-a8dc-151fcbe4a447"
     }
   }
 }

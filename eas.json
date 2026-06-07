@@ -1,0 +1,32 @@
+{
+  "cli": {
+    "version": ">= 18.11.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "channel": "development"
+    },
+    "preview": {
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://api.cheevo.vip",
+        "EXPO_PUBLIC_WEB_URL": "https://cheevo.events"
+      },
+      "channel": "preview"
+    },
+    "production": {
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://api.cheevo.vip",
+        "EXPO_PUBLIC_WEB_URL": "https://cheevo.events"
+      },
+      "channel": "production"
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

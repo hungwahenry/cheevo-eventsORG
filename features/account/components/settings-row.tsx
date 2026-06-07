@@ -7,11 +7,13 @@ import { Pressable, View } from 'react-native';
 export function SettingsRow({
   icon,
   label,
+  value,
   onPress,
   tone = 'default',
 }: {
   icon: LucideIcon;
   label: string;
+  value?: string;
   onPress: () => void;
   tone?: 'default' | 'danger';
 }) {
@@ -30,10 +32,15 @@ export function SettingsRow({
         }`}>
         <Icon as={icon} className={danger ? 'text-destructive size-5' : 'text-foreground size-5'} strokeWidth={2} />
       </View>
-      <Text
-        className={`font-sans-medium flex-1 text-base ${danger ? 'text-destructive' : 'text-foreground'}`}>
+      <Text className={`font-sans-medium text-base ${danger ? 'text-destructive' : 'text-foreground'}`}>
         {label}
       </Text>
+      <View className="flex-1" />
+      {value ? (
+        <Text className="text-muted-foreground max-w-[52%] text-sm" numberOfLines={1}>
+          {value}
+        </Text>
+      ) : null}
       <Icon as={ChevronRight} className="text-muted-foreground size-5" />
     </Pressable>
   );
