@@ -34,3 +34,26 @@ const AUDIENCE_LABELS: Record<BroadcastAudience, string> = {
 export function audienceLabel(audience: BroadcastAudience): string {
   return AUDIENCE_LABELS[audience];
 }
+
+export type CreateBroadcastInput = {
+  audience: BroadcastAudience;
+  subject: string;
+  body_html: string;
+};
+
+export const SUBJECT_MAX = 120;
+export const BODY_MAX = 5000;
+
+function escapeHtml(value: string): string {
+  return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+export function textToHtml(text: string): string {
+  return text
+    .trim()
+    .split(/\n{2,}/)
+    .map((para) => para.trim())
+    .filter(Boolean)
+    .map((para) => `<p>${escapeHtml(para).replace(/\n/g, '<br>')}</p>`)
+    .join('');
+}

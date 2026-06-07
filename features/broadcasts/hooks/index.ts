@@ -1,5 +1,6 @@
 import * as broadcastsApi from '@/features/broadcasts/api';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import type { CreateBroadcastInput } from '@/features/broadcasts/types';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const broadcastsKey = (eventId: string) =>
   ['organizer', 'event', eventId, 'broadcasts'] as const;
@@ -20,5 +21,20 @@ export function useEventBroadcast(eventId: string, broadcastId: string) {
   return useQuery({
     queryKey: broadcastKey(eventId, broadcastId),
     queryFn: () => broadcastsApi.getEventBroadcast(eventId, broadcastId),
+  });
+}
+
+export function useCreateBroadcast(eventId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (input: CreateBroadcastInput) => broadcastsApi.createBroadcast(eventId, input),
+    onSuccess: () => qc.invalidateQueries({ queryKey: broadcastsKey(eventId) }),
+  });
+}
+
+export function useSendTestBroadcast(eventId: string) {
+  return useMutation({
+    mutationFn: (input: { subject: string; body_html: string }) =>
+      broadcastsApi.sendTestBroadcast(eventId, input),
   });
 }
