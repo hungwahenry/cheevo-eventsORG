@@ -6,6 +6,7 @@ import { Text } from '@/components/ui/text';
 import { Textarea } from '@/components/ui/textarea';
 import { useCreateBroadcast, useSendTestBroadcast } from '@/features/broadcasts';
 import { SUBJECT_MAX, textToHtml, type BroadcastAudience } from '@/features/broadcasts/types';
+import { isApiError } from '@/lib/api';
 import { haptics } from '@/lib/haptics';
 import { router, useGlobalSearchParams } from 'expo-router';
 import { ArrowLeft } from 'lucide-react-native';
@@ -31,6 +32,12 @@ export default function NewBroadcastScreen() {
 
   const canSubmit = subject.trim().length >= 3 && message.trim().length >= 3;
 
+  function onValidationError(error: unknown) {
+    if (isApiError(error) && error.isValidation) {
+      toast.error(error.message);
+    }
+  }
+
   function sendTest() {
     if (!canSubmit) {
       toast.error('Add a subject and message first.');
@@ -38,8 +45,11 @@ export default function NewBroadcastScreen() {
     }
     haptics.select();
     test.mutate(
-      { subject: subject.trim(), body_html: textToHtml(message) },
-      { onSuccess: () => toast.success('Test sent to your email.') }
+      { audience, subject: subject.trim(), body_html: textToHtml(message) },
+      {
+        onSuccess: () => toast.success('Test sent to your email.'),
+        onError: onValidationError,
+      }
     );
   }
 
@@ -57,6 +67,7 @@ export default function NewBroadcastScreen() {
           toast.success('Broadcast queued.');
           router.back();
         },
+        onError: onValidationError,
       }
     );
   }

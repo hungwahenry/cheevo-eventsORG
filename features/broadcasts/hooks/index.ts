@@ -34,7 +34,6 @@ export function useCreateBroadcast(eventId: string) {
 
 export function useSendTestBroadcast(eventId: string) {
   return useMutation({
-    mutationFn: (input: { subject: string; body_html: string }) =>
-      broadcastsApi.sendTestBroadcast(eventId, input),
+    mutationFn: (input: CreateBroadcastInput) => broadcastsApi.sendTestBroadcast(eventId, input),
   });
 }

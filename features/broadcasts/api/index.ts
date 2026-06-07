@@ -23,9 +23,6 @@ export function createBroadcast(eventId: string, input: CreateBroadcastInput): P
   return api.post<Broadcast>(`/organizer/events/${eventId}/broadcasts`, input);
 }
 
-export function sendTestBroadcast(
-  eventId: string,
-  input: Pick<CreateBroadcastInput, 'subject' | 'body_html'>
-): Promise<null> {
+export function sendTestBroadcast(eventId: string, input: CreateBroadcastInput): Promise<null> {
   return api.post<null>(`/organizer/events/${eventId}/broadcasts/test`, input);
 }
