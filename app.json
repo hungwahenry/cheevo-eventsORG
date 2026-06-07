@@ -32,7 +32,13 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow cheevo to use the camera to scan and check in tickets at the door."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
