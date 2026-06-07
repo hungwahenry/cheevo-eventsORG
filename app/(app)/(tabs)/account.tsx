@@ -2,8 +2,10 @@ import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { useCurrentUser, useSignOut } from '@/features/auth';
-import { Building2 } from 'lucide-react-native';
-import { Image, ScrollView, View } from 'react-native';
+import { haptics } from '@/lib/haptics';
+import { router } from 'expo-router';
+import { Bell, Building2, ChevronRight, type LucideIcon } from 'lucide-react-native';
+import { Image, Pressable, ScrollView, View } from 'react-native';
 
 export default function AccountScreen() {
   const user = useCurrentUser();
@@ -28,6 +30,14 @@ export default function AccountScreen() {
           </View>
         </View>
 
+        <View className="bg-card overflow-hidden rounded-2xl">
+          <SettingsRow
+            icon={Bell}
+            label="Notifications"
+            onPress={() => router.push('/account/notifications')}
+          />
+        </View>
+
         <Button
           size="lg"
           variant="outline"
@@ -38,6 +48,31 @@ export default function AccountScreen() {
         </Button>
       </ScrollView>
     </View>
+  );
+}
+
+function SettingsRow({
+  icon,
+  label,
+  onPress,
+}: {
+  icon: LucideIcon;
+  label: string;
+  onPress: () => void;
+}) {
+  return (
+    <Pressable
+      onPress={() => {
+        haptics.select();
+        onPress();
+      }}
+      className="active:bg-muted/40 flex-row items-center gap-3 p-4">
+      <View className="bg-muted size-10 items-center justify-center rounded-xl">
+        <Icon as={icon} className="text-foreground size-5" strokeWidth={2} />
+      </View>
+      <Text className="text-foreground font-sans-medium flex-1 text-base">{label}</Text>
+      <Icon as={ChevronRight} className="text-muted-foreground size-5" />
+    </Pressable>
   );
 }
 

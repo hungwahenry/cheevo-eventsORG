@@ -1,5 +1,17 @@
-import type { InboxPage } from '@/features/notifications/types';
+import type {
+  InboxPage,
+  NotificationPreferences,
+  PreferenceUpdate,
+} from '@/features/notifications/types';
 import { api } from '@/lib/api';
+
+export function getNotificationPreferences(): Promise<NotificationPreferences> {
+  return api.get<NotificationPreferences>('/notifications/preferences');
+}
+
+export function updateNotificationPreferences(updates: PreferenceUpdate[]): Promise<null> {
+  return api.patch<null>('/notifications/preferences', { preferences: updates });
+}
 
 export function listInboxNotifications(page: number, perPage = 20): Promise<InboxPage> {
   return api.get<InboxPage>('/notifications', { params: { page, per_page: perPage } });
