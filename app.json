@@ -39,7 +39,8 @@
         {
           "cameraPermission": "Allow cheevo to use the camera to scan and check in tickets at the door."
         }
-      ]
+      ],
+      "expo-sharing"
     ],
     "experiments": {
       "typedRoutes": true

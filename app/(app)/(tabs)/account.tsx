@@ -4,7 +4,15 @@ import { Text } from '@/components/ui/text';
 import { useCurrentUser, useSignOut } from '@/features/auth';
 import { haptics } from '@/lib/haptics';
 import { router } from 'expo-router';
-import { Bell, Building2, ChevronRight, type LucideIcon } from 'lucide-react-native';
+import {
+  Bell,
+  Building2,
+  ChevronRight,
+  Download,
+  Mail,
+  Trash2,
+  type LucideIcon,
+} from 'lucide-react-native';
 import { Image, Pressable, ScrollView, View } from 'react-native';
 
 export default function AccountScreen() {
@@ -36,6 +44,25 @@ export default function AccountScreen() {
             label="Notifications"
             onPress={() => router.push('/account/notifications')}
           />
+          <Divider />
+          <SettingsRow
+            icon={Mail}
+            label="Change email"
+            onPress={() => router.push('/account/email')}
+          />
+          <Divider />
+          <SettingsRow
+            icon={Download}
+            label="Export my data"
+            onPress={() => router.push('/account/data-export')}
+          />
+          <Divider />
+          <SettingsRow
+            icon={Trash2}
+            label="Delete account"
+            tone="danger"
+            onPress={() => router.push('/account/delete')}
+          />
         </View>
 
         <Button
@@ -51,15 +78,22 @@ export default function AccountScreen() {
   );
 }
 
+function Divider() {
+  return <View className="bg-border ml-16 h-px" />;
+}
+
 function SettingsRow({
   icon,
   label,
   onPress,
+  tone = 'default',
 }: {
   icon: LucideIcon;
   label: string;
   onPress: () => void;
+  tone?: 'default' | 'danger';
 }) {
+  const danger = tone === 'danger';
   return (
     <Pressable
       onPress={() => {
@@ -67,10 +101,22 @@ function SettingsRow({
         onPress();
       }}
       className="active:bg-muted/40 flex-row items-center gap-3 p-4">
-      <View className="bg-muted size-10 items-center justify-center rounded-xl">
-        <Icon as={icon} className="text-foreground size-5" strokeWidth={2} />
+      <View
+        className={`size-10 items-center justify-center rounded-xl ${
+          danger ? 'bg-destructive/10' : 'bg-muted'
+        }`}>
+        <Icon
+          as={icon}
+          className={danger ? 'text-destructive size-5' : 'text-foreground size-5'}
+          strokeWidth={2}
+        />
       </View>
-      <Text className="text-foreground font-sans-medium flex-1 text-base">{label}</Text>
+      <Text
+        className={`font-sans-medium flex-1 text-base ${
+          danger ? 'text-destructive' : 'text-foreground'
+        }`}>
+        {label}
+      </Text>
       <Icon as={ChevronRight} className="text-muted-foreground size-5" />
     </Pressable>
   );
