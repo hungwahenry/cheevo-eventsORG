@@ -1,0 +1,57 @@
+import { Icon } from '@/components/ui/icon';
+import { Spinner } from '@/components/ui/spinner';
+import { Text } from '@/components/ui/text';
+import { useCurrentUser } from '@/features/auth';
+import { useEvents } from '@/features/events';
+import { EventCard } from '@/features/events/components/event-card';
+import { CalendarX } from 'lucide-react-native';
+import { FlatList, RefreshControl, View } from 'react-native';
+
+export default function EventsHome() {
+  const user = useCurrentUser();
+  const org = user?.organisations[0];
+  const { data, isLoading, isRefetching, refetch } = useEvents(1);
+
+  return (
+    <View className="bg-background flex-1">
+      <View className="pt-safe-offset-4 px-6 pb-2">
+        <Text className="text-muted-foreground font-sans-medium text-xs uppercase tracking-wide">
+          Events
+        </Text>
+        <Text
+          className="text-foreground font-sans-extrabold text-2xl tracking-tight"
+          numberOfLines={1}>
+          {org?.name ?? 'cheevo'}
+        </Text>
+      </View>
+
+      {isLoading ? (
+        <View className="flex-1 items-center justify-center">
+          <Spinner size="lg" />
+        </View>
+      ) : (
+        <FlatList
+          data={data?.items ?? []}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <EventCard event={item} />}
+          contentContainerStyle={{ padding: 24, paddingTop: 8, gap: 12 }}
+          showsVerticalScrollIndicator={false}
+          refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
+          ListEmptyComponent={
+            <View className="mt-24 items-center gap-3 px-6">
+              <View className="bg-muted size-16 items-center justify-center rounded-full">
+                <Icon as={CalendarX} className="text-muted-foreground size-8" strokeWidth={2} />
+              </View>
+              <Text className="text-foreground font-sans-semibold text-center text-lg">
+                No events yet
+              </Text>
+              <Text className="text-muted-foreground text-center text-sm">
+                Create your first event on the cheevo web dashboard. It&apos;ll show up here.
+              </Text>
+            </View>
+          }
+        />
+      )}
+    </View>
+  );
+}

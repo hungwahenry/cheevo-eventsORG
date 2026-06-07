@@ -28,7 +28,7 @@ export default function EmailScreen() {
             )}
           </Button>
           <Text className="text-muted-foreground text-center text-xs leading-5">
-            By continuing you agree to our{' '}
+            By continuing you agree to our organizer{' '}
             <Text
               className="text-foreground font-sans-medium text-xs underline"
               onPress={() => openLegalPage('terms')}>

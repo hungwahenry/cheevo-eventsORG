@@ -22,5 +22,5 @@ export default function Index() {
     return <Redirect href="/not-organizer" />;
   }
 
-  return <Redirect href="/(app)" />;
+  return <Redirect href="/events" />;
 }
