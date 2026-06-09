@@ -61,7 +61,7 @@ export default function WelcomeScreen() {
           <Text>Get started</Text>
         </Button>
         <Text className="text-muted-foreground text-center text-xs leading-5">
-          New to cheevo? Set up your organisation at cheevo.events
+          New organizer? Set up your organisation at cheevo.vip
         </Text>
       </View>
     </View>
