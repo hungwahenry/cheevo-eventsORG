@@ -63,7 +63,8 @@
           "organization": "issorite",
           "project": "cheevo-organizer"
         }
-      ]
+      ],
+      "expo-video"
     ],
     "experiments": {
       "typedRoutes": true
