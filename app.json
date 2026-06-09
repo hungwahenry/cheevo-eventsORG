@@ -48,7 +48,9 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Allow cheevo to use the camera to scan and check in tickets at the door."
+          "cameraPermission": "Allow cheevo to use the camera to scan and check in tickets at the door.",
+          "microphonePermission": false,
+          "recordAudioAndroid": false
         }
       ],
       "expo-sharing"
