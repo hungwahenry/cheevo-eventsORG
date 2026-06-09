@@ -1,73 +1,43 @@
-# Minimal Uniwind Template
+# cheevo organizer
 
-This is a [React Native](https://reactnative.dev/) project built with [Expo](https://expo.dev/) and [React Native Reusables](https://reactnativereusables.com).
+The cheevo organizer app — an on-site companion for event organizers to scan tickets, check in attendees, send broadcasts, and keep an eye on event activity from their phone.
 
-It was initialized using the following command, then the `Minimal (Uniwind)` template was selected when prompted:
+It pairs with the cheevo platform: organizers create and manage events on the web panel ([cheevo.vip](https://cheevo.vip)), and use this app at the door. Attendees use the separate cheevo app.
 
-```bash
-npx @react-native-reusables/cli@latest init
-```
+## Stack
 
-## Getting Started
+- Expo SDK 55 + Expo Router (typed routes)
+- React 19 / React Native
+- uniwind (Tailwind for React Native) + React Native Reusables
+- TanStack Query, Zustand, React Hook Form + Zod
+- Email-OTP auth (Sanctum tokens), Expo push notifications
+- Sentry crash reporting
 
-To run the development server:
-
-```bash
-    npm run dev
-    # or
-    yarn dev
-    # or
-    pnpm dev
-    # or
-    bun dev
-```
-
-This will start the Expo Dev Server. Open the app in:
-
-- **iOS**: press `i` to launch in the iOS simulator _(Mac only)_
-- **Android**: press `a` to launch in the Android emulator
-- **Web**: press `w` to run in a browser
-
-You can also scan the QR code using the [Expo Go](https://expo.dev/go) app on your device. This project fully supports running in Expo Go for quick testing on physical devices.
-
-## Adding components
-
-You can add more reusable components using the CLI:
+## Getting started
 
 ```bash
-npx react-native-reusables/cli@latest add [...components]
+npm install
+cp .env.example .env   # then fill in the values below
+npm run dev
 ```
 
-> e.g. `npx react-native-reusables/cli@latest add input textarea`
+## Environment
 
-If you don't specify any component names, you'll be prompted to select which components to add interactively. Use the `--all` flag to install all available components at once.
+| Variable | Description |
+| --- | --- |
+| `EXPO_PUBLIC_API_URL` | Base URL of the cheevo API (e.g. `https://api.cheevo.vip`) |
+| `EXPO_PUBLIC_WEB_URL` | Base URL of the cheevo web (e.g. `https://cheevo.events`) |
+| `EXPO_PUBLIC_SENTRY_DSN` | Sentry DSN for crash reporting (leave blank to disable) |
 
-## Project Features
+For production builds, these are set in `eas.json` per build profile.
 
-- ⚛️ Built with [Expo Router](https://expo.dev/router)
-- 🎨 Styled with [Tailwind CSS](https://tailwindcss.com/) via [Uniwind](https://uniwind.dev/)
-- 📦 UI powered by [React Native Reusables](https://github.com/founded-labs/react-native-reusables)
-- 🚀 New Architecture enabled
-- 🔥 Edge to Edge enabled
-- 📱 Runs on iOS, Android, and Web
+## Building
 
-## Learn More
+Production builds run on EAS:
 
-To dive deeper into the technologies used:
+```bash
+eas build --profile production --platform ios
+eas submit --profile production --platform ios
+```
 
-- [React Native Docs](https://reactnative.dev/docs/getting-started)
-- [Expo Docs](https://docs.expo.dev/)
-- [Uniwind Docs](https://docs.uniwind.dev/)
-- [React Native Reusables](https://reactnativereusables.com)
-
-## Deploy with EAS
-
-The easiest way to deploy your app is with [Expo Application Services (EAS)](https://expo.dev/eas).
-
-- [EAS Build](https://docs.expo.dev/build/introduction/)
-- [EAS Updates](https://docs.expo.dev/eas-update/introduction/)
-- [EAS Submit](https://docs.expo.dev/submit/introduction/)
-
----
-
-If you enjoy using React Native Reusables, please consider giving it a ⭐ on [GitHub](https://github.com/founded-labs/react-native-reusables). Your support means a lot!
+The app is iOS-first (iPhone only). Native projects are generated via CNG, so `android/` and `ios/` are gitignored and regenerated on build.
