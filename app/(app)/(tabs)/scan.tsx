@@ -6,12 +6,14 @@ import { useEvents } from '@/features/events';
 import { EventStatusBadge } from '@/features/events/components/event-status-badge';
 import { formatShortDateTime } from '@/lib/format/datetime';
 import { haptics } from '@/lib/haptics';
+import { useManualRefresh } from '@/lib/use-manual-refresh';
 import { router } from 'expo-router';
 import { ChevronRight, ScanLine } from 'lucide-react-native';
 import { FlatList, Pressable, RefreshControl, View } from 'react-native';
 
 export default function ScanScreen() {
-  const { data, isLoading, isRefetching, refetch } = useEvents(1);
+  const { data, isLoading, refetch } = useEvents(1);
+  const { refreshing, onRefresh } = useManualRefresh(refetch);
 
   return (
     <View className="bg-background flex-1">
@@ -55,7 +57,7 @@ export default function ScanScreen() {
           )}
           contentContainerStyle={{ padding: 24, paddingTop: 8, gap: 12 }}
           showsVerticalScrollIndicator={false}
-          refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
           ListEmptyComponent={
             <EmptyState
               icon={ScanLine}

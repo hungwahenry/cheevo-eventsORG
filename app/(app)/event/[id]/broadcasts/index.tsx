@@ -8,12 +8,14 @@ import { useEventBroadcasts } from '@/features/broadcasts';
 import { BroadcastRow } from '@/features/broadcasts/components/broadcast-row';
 import { haptics } from '@/lib/haptics';
 import { router, useGlobalSearchParams } from 'expo-router';
+import { useManualRefresh } from '@/lib/use-manual-refresh';
 import { Megaphone, Plus } from 'lucide-react-native';
 import { FlatList, RefreshControl, View } from 'react-native';
 
 export default function BroadcastsScreen() {
   const { id } = useGlobalSearchParams<{ id: string }>();
   const query = useEventBroadcasts(id);
+  const { refreshing, onRefresh } = useManualRefresh(query.refetch);
 
   const items = query.data?.pages.flatMap((p) => p.items) ?? [];
   const total = query.data?.pages[0]?.total ?? 0;
@@ -48,7 +50,7 @@ export default function BroadcastsScreen() {
           contentContainerStyle={{ padding: 24, paddingTop: 8, gap: 12 }}
           showsVerticalScrollIndicator={false}
           refreshControl={
-            <RefreshControl refreshing={query.isRefetching} onRefresh={query.refetch} />
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           onEndReachedThreshold={0.4}
           onEndReached={() => {

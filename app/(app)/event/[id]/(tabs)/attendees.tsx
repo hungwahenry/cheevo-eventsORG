@@ -8,6 +8,7 @@ import { holderName, type IssuedTicket, type IssuedTicketStatus } from '@/featur
 import { haptics } from '@/lib/haptics';
 import { useDebouncedValue } from '@/lib/use-debounced-value';
 import { useGlobalSearchParams } from 'expo-router';
+import { useManualRefresh } from '@/lib/use-manual-refresh';
 import { Search, Users } from 'lucide-react-native';
 import { useState } from 'react';
 import { Alert, FlatList, RefreshControl, View } from 'react-native';
@@ -27,6 +28,7 @@ export default function AttendeesTab() {
   const debouncedSearch = useDebouncedValue(search.trim(), 350);
 
   const query = useIssuedTickets(id, status, debouncedSearch || undefined);
+  const { refreshing, onRefresh } = useManualRefresh(query.refetch);
   const scan = useScanTicket(id);
   const revoke = useRevokeTicket(id);
 
@@ -94,7 +96,7 @@ export default function AttendeesTab() {
           contentContainerStyle={{ padding: 24, paddingTop: 8, gap: 12 }}
           showsVerticalScrollIndicator={false}
           refreshControl={
-            <RefreshControl refreshing={query.isRefetching} onRefresh={query.refetch} />
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           onEndReachedThreshold={0.4}
           onEndReached={() => {

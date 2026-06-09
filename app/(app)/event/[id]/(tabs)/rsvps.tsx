@@ -6,12 +6,14 @@ import { useEventRsvps } from '@/features/rsvps';
 import { rsvpName } from '@/features/rsvps/types';
 import { formatShortDateTime } from '@/lib/format/datetime';
 import { useGlobalSearchParams } from 'expo-router';
+import { useManualRefresh } from '@/lib/use-manual-refresh';
 import { CalendarCheck } from 'lucide-react-native';
 import { FlatList, RefreshControl, View } from 'react-native';
 
 export default function RsvpsTab() {
   const { id } = useGlobalSearchParams<{ id: string }>();
   const query = useEventRsvps(id);
+  const { refreshing, onRefresh } = useManualRefresh(query.refetch);
 
   const items = query.data?.pages.flatMap((p) => p.items) ?? [];
 
@@ -41,7 +43,7 @@ export default function RsvpsTab() {
           contentContainerStyle={{ padding: 24, gap: 12 }}
           showsVerticalScrollIndicator={false}
           refreshControl={
-            <RefreshControl refreshing={query.isRefetching} onRefresh={query.refetch} />
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           onEndReachedThreshold={0.4}
           onEndReached={() => {

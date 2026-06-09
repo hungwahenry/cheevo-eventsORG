@@ -4,13 +4,15 @@ import { Text } from '@/components/ui/text';
 import { useCurrentUser } from '@/features/auth';
 import { useEvents } from '@/features/events';
 import { EventCard } from '@/features/events/components/event-card';
+import { useManualRefresh } from '@/lib/use-manual-refresh';
 import { CalendarX } from 'lucide-react-native';
 import { FlatList, RefreshControl, View } from 'react-native';
 
 export default function EventsHome() {
   const user = useCurrentUser();
   const org = user?.organisations[0];
-  const { data, isLoading, isRefetching, refetch } = useEvents(1);
+  const { data, isLoading, refetch } = useEvents(1);
+  const { refreshing, onRefresh } = useManualRefresh(refetch);
 
   return (
     <View className="bg-background flex-1">
@@ -36,7 +38,7 @@ export default function EventsHome() {
           renderItem={({ item }) => <EventCard event={item} />}
           contentContainerStyle={{ padding: 24, paddingTop: 8, gap: 12 }}
           showsVerticalScrollIndicator={false}
-          refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
           ListEmptyComponent={
             <EmptyState
               icon={CalendarX}

@@ -12,11 +12,13 @@ import type { InboxNotification } from '@/features/notifications/types';
 import { haptics } from '@/lib/haptics';
 import { routeForNotification } from '@/lib/notification-routing';
 import { router } from 'expo-router';
+import { useManualRefresh } from '@/lib/use-manual-refresh';
 import { Bell } from 'lucide-react-native';
 import { FlatList, Pressable, RefreshControl, View } from 'react-native';
 
 export default function ActivityScreen() {
   const query = useInboxNotifications();
+  const { refreshing, onRefresh } = useManualRefresh(query.refetch);
   const { data: unread } = useUnreadCount();
   const markRead = useMarkRead();
   const markAllRead = useMarkAllRead();
@@ -65,7 +67,7 @@ export default function ActivityScreen() {
           contentContainerStyle={{ paddingTop: 8, paddingBottom: 24 }}
           showsVerticalScrollIndicator={false}
           refreshControl={
-            <RefreshControl refreshing={query.isRefetching} onRefresh={query.refetch} />
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           onEndReachedThreshold={0.4}
           onEndReached={() => {

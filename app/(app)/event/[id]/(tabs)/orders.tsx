@@ -5,6 +5,7 @@ import { useEventOrders } from '@/features/orders';
 import { OrderRow } from '@/features/orders/components/order-row';
 import type { OrderStatus } from '@/features/orders/types';
 import { useGlobalSearchParams } from 'expo-router';
+import { useManualRefresh } from '@/lib/use-manual-refresh';
 import { Receipt } from 'lucide-react-native';
 import { useState } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
@@ -20,6 +21,7 @@ export default function OrdersTab() {
   const { id } = useGlobalSearchParams<{ id: string }>();
   const [status, setStatus] = useState<OrderStatus | undefined>(undefined);
   const query = useEventOrders(id, status);
+  const { refreshing, onRefresh } = useManualRefresh(query.refetch);
 
   const items = query.data?.pages.flatMap((p) => p.items) ?? [];
 
@@ -41,7 +43,7 @@ export default function OrdersTab() {
           contentContainerStyle={{ padding: 24, paddingTop: 8, gap: 12 }}
           showsVerticalScrollIndicator={false}
           refreshControl={
-            <RefreshControl refreshing={query.isRefetching} onRefresh={query.refetch} />
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           onEndReachedThreshold={0.4}
           onEndReached={() => {
