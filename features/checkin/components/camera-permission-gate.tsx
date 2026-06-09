@@ -40,7 +40,9 @@ export function CameraPermissionGate({ children }: { children: ReactNode }) {
                 onPress={() =>
                   permission.canAskAgain ? requestPermission() : Linking.openSettings()
                 }>
-                <Text>{permission.canAskAgain ? 'Allow camera' : 'Open settings'}</Text>
+                <Text className="flex-1 text-center">
+                  {permission.canAskAgain ? 'Continue' : 'Open settings'}
+                </Text>
               </Button>
             </View>
           }

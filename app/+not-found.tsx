@@ -17,7 +17,7 @@ export default function NotFoundScreen() {
           action={
             <View className="mt-4 w-full max-w-xs">
               <Button size="lg" className="w-full" onPress={() => router.replace('/')}>
-                <Text>Go home</Text>
+                <Text className="flex-1 text-center">Go home</Text>
               </Button>
             </View>
           }

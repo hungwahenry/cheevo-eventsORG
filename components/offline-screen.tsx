@@ -33,7 +33,7 @@ export function OfflineScreen() {
               {isRetrying ? (
                 <Spinner size="sm" barClassName="bg-primary-foreground" />
               ) : (
-                <Text>Try again</Text>
+                <Text className="flex-1 text-center">Try again</Text>
               )}
             </Button>
           </View>

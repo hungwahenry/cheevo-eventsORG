@@ -23,7 +23,7 @@ export default function NotOrganizerScreen() {
               className="w-full"
               disabled={isPending}
               onPress={signOut}>
-              <Text>Sign out</Text>
+              <Text className="flex-1 text-center">Sign out</Text>
             </Button>
           </View>
         }
