@@ -14,7 +14,7 @@
       "env": {
         "EXPO_PUBLIC_API_URL": "https://api.cheevo.vip",
         "EXPO_PUBLIC_WEB_URL": "https://cheevo.events",
-        "EXPO_PUBLIC_SENTRY_DSN": ""
+        "EXPO_PUBLIC_SENTRY_DSN": "https://c0472e72e416afd79d155a74ee9f00ed@o4511342454308864.ingest.us.sentry.io/4511532591153152"
       },
       "channel": "preview"
     },
@@ -23,7 +23,7 @@
       "env": {
         "EXPO_PUBLIC_API_URL": "https://api.cheevo.vip",
         "EXPO_PUBLIC_WEB_URL": "https://cheevo.events",
-        "EXPO_PUBLIC_SENTRY_DSN": ""
+        "EXPO_PUBLIC_SENTRY_DSN": "https://c0472e72e416afd79d155a74ee9f00ed@o4511342454308864.ingest.us.sentry.io/4511532591153152"
       },
       "channel": "production"
     }
