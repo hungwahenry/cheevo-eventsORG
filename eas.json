@@ -13,7 +13,8 @@
       "distribution": "internal",
       "env": {
         "EXPO_PUBLIC_API_URL": "https://api.cheevo.vip",
-        "EXPO_PUBLIC_WEB_URL": "https://cheevo.events"
+        "EXPO_PUBLIC_WEB_URL": "https://cheevo.events",
+        "EXPO_PUBLIC_SENTRY_DSN": ""
       },
       "channel": "preview"
     },
@@ -21,7 +22,8 @@
       "autoIncrement": true,
       "env": {
         "EXPO_PUBLIC_API_URL": "https://api.cheevo.vip",
-        "EXPO_PUBLIC_WEB_URL": "https://cheevo.events"
+        "EXPO_PUBLIC_WEB_URL": "https://cheevo.events",
+        "EXPO_PUBLIC_SENTRY_DSN": ""
       },
       "channel": "production"
     }

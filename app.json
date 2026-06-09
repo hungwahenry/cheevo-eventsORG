@@ -29,7 +29,9 @@
       },
       "package": "events.cheevo.organizer",
       "googleServicesFile": "./google-services.json",
-      "permissions": ["android.permission.CAMERA"],
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
       "blockedPermissions": [
         "android.permission.RECORD_AUDIO",
         "android.permission.READ_EXTERNAL_STORAGE",
@@ -53,7 +55,15 @@
           "recordAudioAndroid": false
         }
       ],
-      "expo-sharing"
+      "expo-sharing",
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "organization": "issorite",
+          "project": "cheevo-organizer"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

@@ -34,10 +34,19 @@ import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaListener, SafeAreaProvider } from 'react-native-safe-area-context';
 import { Toaster } from 'sonner-native';
 import { Uniwind, useUniwind } from 'uniwind';
+import * as Sentry from '@sentry/react-native';
 
 export { AppErrorBoundary as ErrorBoundary } from '@/components/error-boundary';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
+
+Sentry.init({
+  dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
+  enabled: Boolean(process.env.EXPO_PUBLIC_SENTRY_DSN),
+  environment: __DEV__ ? 'development' : 'production',
+  sendDefaultPii: false,
+  tracesSampleRate: __DEV__ ? 1.0 : 0.1,
+});
 
 configureForegroundHandler();
 
@@ -46,7 +55,7 @@ function NotificationsRuntime() {
   return null;
 }
 
-export default function RootLayout() {
+function RootLayout() {
   const { theme } = useUniwind();
 
   const [fontsLoaded] = useFonts({
@@ -118,3 +127,5 @@ function useSplashGate(isOfflineCold: boolean) {
     return () => clearTimeout(t);
   }, []);
 }
+
+export default Sentry.wrap(RootLayout);
